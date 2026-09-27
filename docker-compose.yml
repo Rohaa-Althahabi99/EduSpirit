@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: eduspirit-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${DB_SA_PASSWORD:?يجب تعيين DB_SA_PASSWORD في ملف .env}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - eduspirit-db-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eduspirit-api
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=EduSpiritDB;User Id=sa;Password=${DB_SA_PASSWORD};TrustServerCertificate=True;"
+      Jwt__SecretKey: "${JWT_SECRET_KEY:?يجب تعيين JWT_SECRET_KEY في ملف .env}"
+      Jwt__Issuer: "EduSpirit.API"
+      Jwt__Audience: "EduSpirit.Mobile"
+    ports:
+      - "8080:8080"
+    volumes:
+      # ملاحظة: أول تشغيل قد يحتاج `docker compose exec api chown -R eduspirit:eduspirit /app/wwwroot/uploads /app/logs`
+      # إن ظهرت مشاكل صلاحيات كتابة، لأن Docker يُنشئ الـ named volumes الجديدة بملكية root افتراضيًا.
+      - eduspirit-uploads:/app/wwwroot/uploads
+      - eduspirit-logs:/app/logs
+
+volumes:
+  eduspirit-db-data:
+  eduspirit-uploads:
+  eduspirit-logs:

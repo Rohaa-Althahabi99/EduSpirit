@@ -1,0 +1,29 @@
+# ---------- .NET / Backend ----------
+bin/
+obj/
+*.user
+appsettings.Development.json
+appsettings.Production.json
+*.db
+
+# ---------- Flutter ----------
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/.packages
+mobile/ios/Pods/
+mobile/android/.gradle/
+.vs/
+mobile.zip
+*.zip
+backend/src/EduSpirit.API/logs/
+mobile/**/build/
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+
+# ---------- Secrets ----------
+.env
+# Visual Studio
+.vs/

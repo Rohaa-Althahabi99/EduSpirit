@@ -1,0 +1,59 @@
+name: eduspirit
+description: "EduSpirit — The Intelligent Academic Companion"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # ---- State Management (MVVM) ----
+  provider: ^6.1.2
+
+  # ---- Networking ----
+  dio: ^5.6.0
+
+  # ---- Secure local storage (Access/Refresh Tokens) ----
+  flutter_secure_storage: ^9.2.2
+
+  # ---- Local (non-sensitive) storage: theme, language preference ----
+  shared_preferences: ^2.3.2
+
+  # ---- Fonts & UI ----
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10+1
+  shimmer: ^3.0.0            # Skeleton Loading
+  lottie: ^3.1.2             # Lottie Animations
+  intl: 0.20.3
+
+  # ---- تسجيل الدخول الخارجي والبصمة/Face ID ----
+  google_sign_in: ^6.2.1
+  local_auth: ^2.3.0
+
+  # ---- Offline Mode: تخزين محلي للبيانات الأساسية عند انقطاع الإنترنت ----
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  connectivity_plus: ^6.0.5
+
+  # ---- File Manager: اختيار وفتح الملفات ----
+  file_picker: ^8.1.2
+  open_filex: ^4.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.13
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/lottie/
+    - assets/images/
